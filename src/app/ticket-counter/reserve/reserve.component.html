@@ -1,0 +1,72 @@
+<div [ngClass]="['container']">
+    <div *ngIf="greaterThan(totalSeat, 4); else emptySeat">
+       <div ng-app="bookYourSeatApp" ng-controller="mainCtrl as ctrl">
+        </div>
+       <div  [ngClass]="['center']">
+        <select placeholder="Select seat"   [ngClass]="['cus-select']" name="selectSeat" [(ngModel)]="this.selectedCount" (change)="checkSelected($event.target.value)">
+            <option *ngFor="let group of selectionCount"  [value]="group.val" >
+              {{ group.id }} Seat
+            </option>
+          </select>
+          <strong [ngClass]="['auther']">
+            By    :  {{auther.name}}<br />
+            Mob.  :  {{auther.mob}}<br />
+            Email :  {{auther.email}}<br />
+            Skype :  {{auther.skype}}
+         </strong> 
+          <div [ngStyle]="{'padding':'10px 10px 0px 0px'}">
+              <strong>Seats left: {{this.availCount.val}}</strong><br/>
+              <strong>A : Available, B : Booked</strong> 
+          </div>
+        </div>
+        <div [ngClass]="bookYourSeatApp " *ngIf="seats.firstRang.seats?.length>0;else emptySeat">
+            <table [ngClass]="['firstTable']">
+                <thead>
+                    <tr>
+                        <th colspan="7"> Train Couch - A , Total Seats:80 </th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let rang of seats.firstRang.seats">
+                    <td *ngFor="let seat of rang" 
+                        [ngClass]="{'active': seat.checked, 'booked': seat.booked}" 
+                        (click)="selectSeats({rang:'firstRang', row:rang, seat: seat}, this.selectedCount)">
+                         <span *ngIf="seat.checked;else avail">{{seat.caption}}-B</span>
+                         <ng-template #avail>{{seat.caption}}-A </ng-template>
+                    </td>
+                </tr>            
+                <tr *ngFor="let rang of seats.secondRang.seats">
+                    <td *ngFor="let seat of rang"
+                        [ngClass]="{'active': seat.checked, 'booked': seat.booked}" 
+                        (click)="selectSeats({rang:'firstRang', row:rang, seat: seat}, this.selectedCount)">
+                        <span *ngIf="seat.checked;else avail">{{seat.caption}}-B</span>
+                        <ng-template #avail>{{seat.caption}}-A </ng-template>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <table [ngClass]="['secondTable']">
+                <thead>
+                    <tr><th colspan="3"><span [ngStyle]="{'color':'#008000'}">Seat Booked List</span></th></tr>
+                    <tr><th>S. No.</th><th>Seat Number</th><th>Booked</th></tr>
+                </thead>
+                <tbody *ngIf="this.reserveSeatLists.length>0">
+                    <tr *ngFor="let lists of this.reserveSeatLists; let i = index" align="center" >
+                        <td>{{i+1}}</td>
+                        <td>{{lists.id}}</td>
+                        <td>
+                            <span *ngIf="lists.checked"><strong>Booked</strong></span>
+                            <span *ngIf="!lists.checked"><strong>Not Booked</strong></span>
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody *ngIf="this.reserveSeatLists.length==0">
+                    <tr><td colspan="3">No Booked List Available</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <ng-template #emptySeat>
+        <p><strong>Opps! Empty Seat in couch</strong></p>
+    </ng-template>
+</div>
