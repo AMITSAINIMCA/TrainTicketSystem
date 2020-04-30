@@ -7,5 +7,5 @@ echo "Building Train Ticket Application";
 #ng build  --aot --build-optimizer
 
 
-#ng build --aot --prod --output-hashing none --build-optimizer=false
-pm2 start --name 'trainfrontend' server.js
+ng build --aot --prod --output-hashing none --build-optimizer=false
+#pm2 start --name 'trainfrontend' server.js
