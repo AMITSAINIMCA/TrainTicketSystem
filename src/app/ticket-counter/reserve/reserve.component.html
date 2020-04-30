@@ -1,6 +1,6 @@
 <div [ngClass]="['container']">
     <div *ngIf="greaterThan(totalSeat, 4); else emptySeat">
-       <div ng-app="bookYourSeatApp" ng-controller="mainCtrl as ctrl">
+       <div>
         </div>
        <div  [ngClass]="['center']">
         <select placeholder="Select seat"   [ngClass]="['cus-select']" name="selectSeat" [(ngModel)]="this.selectedCount" (change)="checkSelected($event.target.value)">
@@ -19,7 +19,7 @@
               <strong>A : Available, B : Booked</strong> 
           </div>
         </div>
-        <div [ngClass]="bookYourSeatApp " *ngIf="seats.firstRang.seats?.length>0;else emptySeat">
+        <div [ngClass]="['bookYourSeatApp']" *ngIf="seats.firstRang.seats?.length>0;else emptySeat">
             <table [ngClass]="['firstTable']">
                 <thead>
                     <tr>
